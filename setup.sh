@@ -25,4 +25,10 @@ fi
 
 cp -r waybar "$config"
 
+dir="${config}/qt6ct/colors"
+
+if [ -d "$dir" ]; then
+    cp -r qt/* "$dir"
+fi
+
 echo "Hyprland has been configured."
