@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-sudo pacman -S hyprland alacritty noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-mononoki-nerd vlc pipewire wireplumber pipewire-audio pipewire-pulse pipewire-alsa pipewire-jack pavucontrol xdg-desktop-portal-hyprland hyprpolkitagent qt5-wayland qt6-wayland dolphin imv mpv playerctl brightnessctl nwg-look gnome-themes-extra qt6ct
+sudo pacman -S hyprland alacritty noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-mononoki-nerd vlc pipewire wireplumber pipewire-audio pipewire-pulse pipewire-alsa pipewire-jack pavucontrol xdg-desktop-portal-hyprland hyprpolkitagent qt5-wayland qt6-wayland dolphin imv mpv playerctl brightnessctl nwg-look gnome-themes-extra qt6ct waybar
 
 # Optional dependencies, uncomment one of these
 

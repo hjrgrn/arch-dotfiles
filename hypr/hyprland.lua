@@ -49,6 +49,12 @@ local launcher    = "hyprlauncher"
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 -- end)
 
+hl.on("hyprland.start", function()
+    hl.exec_cmd("waybar")
+    -- TODO:
+    -- hl.exec_cmd("systemctl --user start hyprpolkitagent")
+end)
+
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
@@ -59,7 +65,6 @@ local launcher    = "hyprlauncher"
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
 hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
-
 
 -----------------------
 ----- PERMISSIONS -----
