@@ -1,16 +1,172 @@
+// -*- mode: jsonc -*-
 {
     "layer": "top",
-    "modules-left": ["hyprland/workspaces", "sway/submap"],
-    "modules-center": ["hyprland/window"],
-    "modules-right": ["battery", "clock"],
+    "modules-left": ["hyprland/workspaces"],
+    "modules-center": ["group/media"],
+    "modules-right": [
+        "hyprland/submap",
+        "group/volume",
+        "battery",
+        // "bluetooth",
+        "keyboard-state",
+        "network",
+        "cpu",
+        "memory",
+        "tray",
+        "clock"
+    ],
     "hyprland/window": {
-        "max-length": 50
+        "format": "{title}",
+        "max-length": 50,
+        "icon": true,
+        "icon-size": 18
+    },
+    "hyprland/submap": {
+        "format": "{}",
+        "max-length": 8,
+        "tooltip": false
+    },
+    "hyprland/workspaces": {
+		// "disable-scroll": true,
+		"on-click": "activate",
+		"format": "{icon}",
+        "activate-only": false,
+        "all-outputs": true,
+        "format-active": "{icon}",
+        "persistent_workspaces": {
+			"1": [],
+			"2": [],
+			"3": [],
+			"4": [],
+			"5": [],
+			"6": [],
+			"7": [],
+			"8": [],
+			"9": []
+		},
+		"format-icons": {
+			"1": "1",
+			"2": "2",
+			"3": "3",
+			"4": "4",
+			"5": "5",
+			"6": "6",
+			"7": "7",
+			"8": "8",
+			"9": "9",
+			"urgent": ""
+		}
+	},
+    "clock": {
+      "format": "{:%H:%M} ",
+      "format-alt": "{:%A, %d %B %Y}",
+      "tooltip-format": "<tt><small>{calendar}</small></tt>",
+      "calendar": {
+        "format": {
+          "today": "<span color='#8aadf4'><b>{}</b></span>"
+        }
+      }
+    },
+    "tray": {
+        "spacing": 10
+    },
+    "bluetooth": {
+      // "controller": "controller1", // specify the alias of the controller if there are more than 1 on the system
+      "format": "",
+      "format-disabled": "", // an empty format will hide the module
+      "format-connected": " {num_connections}",
+      "tooltip-format": "{controller_alias}\t{controller_address}",
+      "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+      "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+      "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+      // TODO:
+      // "on-click": "exec wezterm start --class bluetui -- bluetui"
+    },
+    "memory": {
+        "interval": 30,
+        "format": "   {percentage}%",
+        "tooltip-format": "{used:0.1f}G/{total:0.1f}G used"
+        // TODO:
+        // "on-click": "exec wezterm start --class htop -- htop",
+        // "on-click-right": "exec wezterm start --class btop -- btop"
+    },
+    "network": {
+		"format-wifi": "  {essid}",
+		"format-ethernet": "  Connected",
+		"format-disconnected": "  Disconnected",
+		"tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\n⬆️ {bandwidthUpBits} ⬇️ {bandwidthDownBits}",
+		"tooltip-format-ethernet": "  {ifname}\nIP: {ipaddr}\n⬆️ {bandwidthUpBits} ⬇️ {bandwidthDownBits}",
+		"format-linked": "{ifname} (No IP) ",
+		"on-click": "/usr/bin/nm-connection-editor"
     },
     "battery": {
+        "interval": 60,
         "format": "{capacity}% {icon}",
-        "format-icons": ["", "", "", "", ""]
+        "format-icons": {
+            "default": ["󰂎", "󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+            "charging": ["󰢟", "󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
+        }
     },
-    "clock": {
-        "format-alt": "{:%a, %d. %b  %H:%M}"
+    "cpu": {
+        "interval": 10,
+        "format": "  {}%",
+        "max-length": 10
+    },
+    "keyboard-state": {
+        "numlock": false,
+        "capslock": true,
+        "format": "{icon}",
+        "format-icons": {
+            "locked": "",
+            "unlocked": ""
+        }
+    },
+    "group/volume": {
+      "orientation": "horizontal",
+      "modules": [
+        "pulseaudio",
+        "pulseaudio/slider"
+      ]
+    },
+    "pulseaudio": {
+        "format": "{volume}% {icon}",
+        "format-muted": "󰝟",
+        "format-icons": {
+            "default": ["", "", ""]
+        },
+        "scroll-step": 1,
+        "on-click": "/usr/bin/pavucontrol"
+    },
+    "pulseaudio/slider": {
+        "min": 0,
+        "max": 100,
+        "orientation": "horizontal"
+    },
+    "group/media": {
+      "orientation": "horizontal",
+      "modules": [
+        "custom/media-status",
+        "custom/media-now-playing",
+        "custom/media-time"
+      ]
+    },
+    "custom/media-status": {
+      "exec": "~/.local/share/waybar_scripts/media-status.sh",
+      "on-click": "/usr/bin/playerctl play-pause",
+      "tooltip": false
+    },
+    "custom/media-now-playing": {
+      "exec": "/usr/bin/playerctl metadata --format='{{ artist }} - {{ title }}' 2>/dev/null",
+      "escape": true,
+      "on-click": "/usr/bin/playerctl play-pause",
+      "tooltip": false
+    },
+    "custom/media-time": {
+      "exec": "/usr/bin/playerctl metadata --format '{{duration(position)}}/{{duration(mpris:length)}}' 2>/dev/null",
+      "interval": 1,
+      "escape": true,
+      "on-click": "/usr/bin/playerctl play-pause",
+      "tooltip": false
     }
 }
+

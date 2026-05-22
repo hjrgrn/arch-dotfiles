@@ -9,6 +9,7 @@ sudo pacman -S hyprlauncher dolphin mako
 # sudo pacman -S rofi nemo dunst
 
 readonly config="$HOME/.config"
+readonly share="$HOME/.local/share"
 dir="${config}/hypr"
 
 if [ -d "$dir" ]; then
@@ -30,5 +31,15 @@ dir="${config}/qt6ct/colors"
 if [ -d "$dir" ]; then
     cp -r qt/* "$dir"
 fi
+
+dir="${share}/waybar_scripts"
+
+if [ -d "$dir" ]; then
+    rm -r "$dir"
+fi
+
+cp -r waybar_scripts "$share"
+
+sudo usermod -a -G input $USER
 
 echo "Hyprland has been configured."
