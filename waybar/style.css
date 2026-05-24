@@ -1,4 +1,5 @@
-@define-color highlight #8839ef;
+@define-color highlight-1 #8839ef;
+@define-color highlight-2 #1e66f5;
 @define-color dark-9 #181926;
 @define-color dark-8 #24273a;
 @define-color dark-7 #363a4f;
@@ -6,12 +7,10 @@
 @define-color dark-5 #6e738d;
 @define-color red #ed8796;
 @define-color light-grey #cad3f5;
-@define-color blue #1e66f5;
 
 * {
     border: none;
     border-radius: 0;
-    /* Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20,100,1,200 */
     font-family: "JetBrainsMono Nerd Font Propo", sans-serif;
     font-size: 17px;
     min-height: 0;
@@ -25,8 +24,15 @@ window#waybar {
 }
 
 tooltip {
-    background: @dark-9;
-    border-radius: 5px;
+    background:
+        linear-gradient(@dark-9, @dark-9) padding-box,
+        /* Inner background */
+        linear-gradient(to right, @highlight-1, @highlight-2) border-box;
+    /* Gradient border */
+    border: 3px solid transparent;
+    border-radius: 9px;
+    background-clip: padding-box, border-box;
+    transition-duration: 0.5s;
 }
 
 tooltip label {
@@ -34,34 +40,26 @@ tooltip label {
 }
 
 #workspaces button {
-    /* padding: 3px; */
-    /* margin: 10px 0px 10px 7px; */
     background: transparent;
-    /* border-radius: 2px; */
     color: @light-grey;
-}
-
-#workspaces button:hover {
-    background-color: @dark-8;
-    border-bottom: 3px solid @highlight;
+    border-bottom: 3px solid @dark-6;
 }
 
 #workspaces button.urgent {
     background: @red;
 }
 
+#workspaces button:hover,
+#workspaces button.has-window,
 #workspaces button.active {
     background-color: @dark-8;
-    border-bottom: 3px solid @dark-6;
     color: @light-grey;
-}
-
-.modules-right {
-    padding: 0px 10px;
+    border-bottom: 3px solid transparent;
+    border-image: linear-gradient(to right, @highlight-1, @highlight-2) 1;
 }
 
 #submap,
-#bluetooth,
+#highlight-2tooth,
 #memory,
 #network,
 #cpu,
@@ -70,26 +68,30 @@ tooltip label {
 #clock,
 #tray,
 #battery {
-    border-radius: 8px;
-    padding: 5px 8px;
+    border-bottom: 3px solid @dark-6;
+    padding: 0 10px;
+    margin: 0 2px;
     background: @dark-8;
+    transition-duration: .5s;
 }
 
-#submap,
-#bluetooth,
-#memory,
-#network,
-#cpu,
-#volume,
-#keyboard-state,
-#clock,
-#tray,
-#battery {
-    margin: 7px 10px 7px 0px;
+#submap:hover,
+#highlight-2tooth:hover,
+#memory:hover,
+#network:hover,
+#cpu:hover,
+#volume:hover,
+#keyboard-state:hover,
+#clock:hover,
+#tray:hover,
+#battery:hover {
+    color: @dark-8;
+    border-bottom: 3px solid transparent;
+    background: linear-gradient(to right, @highlight-1, @highlight-2);
 }
 
 #media {
-    color: @blue;
+    color: @highlight-2;
     margin: 7px 0px 7px 80px;
 }
 
@@ -141,5 +143,5 @@ tooltip label {
 #pulseaudio-slider highlight {
     min-width: 10px;
     border-radius: 5px;
-    background: @highlight;
+    background: @highlight-1;
 }
