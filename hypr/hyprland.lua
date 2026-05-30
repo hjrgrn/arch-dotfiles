@@ -31,6 +31,7 @@ hl.monitor({
 local terminal    = "alacritty"
 local fileManager = "dolphin"
 local launcher    = "hyprlauncher"
+local lock        = "pidof hyprlock || hyprlock" -- or "loginctl lock-session"
 -- local launcher    = "rofi -show drun -show-icons"
 
 
@@ -51,8 +52,8 @@ local launcher    = "hyprlauncher"
 
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
-    -- TODO:
-    -- hl.exec_cmd("systemctl --user start hyprpolkitagent")
+    hl.exec_cmd("hypridle")
+    hl.exec_cmd("systemctl --user start hyprpolkitagent")
 end)
 
 
@@ -279,6 +280,7 @@ hl.bind(mainMod .. " + Y", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + M", hl.dsp.window.fullscreen({ mode = "maximized" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(launcher))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd(lock))
 -- hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 
 -- Move focus with mainMod + arrow keys

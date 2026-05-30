@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-sudo pacman -S hyprland alacritty noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-mononoki-nerd vlc pipewire wireplumber pipewire-audio pipewire-pulse pipewire-alsa pipewire-jack pavucontrol xdg-desktop-portal-hyprland hyprpolkitagent qt5-wayland qt6-wayland dolphin imv mpv playerctl brightnessctl nwg-look gnome-themes-extra qt6ct waybar ttf-jetbrains-mono-nerd
+sudo pacman -S hyprland alacritty noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-mononoki-nerd vlc pipewire wireplumber pipewire-audio pipewire-pulse pipewire-alsa pipewire-jack pavucontrol xdg-desktop-portal-hyprland hyprpolkitagent qt5-wayland qt6-wayland dolphin imv mpv playerctl brightnessctl nwg-look gnome-themes-extra qt6ct waybar ttf-jetbrains-mono-nerd hypridle hyprlock
 
 # Optional dependencies, uncomment one of these
 
@@ -10,10 +10,10 @@ sudo pacman -S hyprlauncher dolphin mako
 
 readonly config="$HOME/.config"
 readonly share="$HOME/.local/share"
-dir="${config}/hypr"
+readonly hypr="${config}/hypr"
 
-if [ -d "$dir" ]; then
-    rm -r "$dir"
+if [ -d "$hypr" ]; then
+    rm -r "$hypr"
 fi
 
 cp -r hypr "$config"
@@ -37,6 +37,13 @@ dir="${share}/waybar_scripts"
 if [ -d "$dir" ]; then
     rm -r "$dir"
 fi
+
+dir="./assets"
+
+if [ -d "$dir" ]; then
+    cp "${dir}/user.png" "${hypr}"
+fi
+
 
 cp -r waybar_scripts "$share"
 
